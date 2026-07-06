@@ -34,6 +34,8 @@ function UnDeath:GetDefaults()
             pillarIconPosition = nil,
             -- Next Spell
             assistedCombat = false,
+            assistedIconSize = 48,
+            assistedKeybindSize = 12,
             assistedPosition = nil,
             -- Alerts
             soundEnabled = true,
@@ -435,6 +437,30 @@ local function GetOptions()
                         set = function(_, val)
                             UnDeath.db.profile.assistedCombat = val
                             UnDeath:SendMessage("UNDEATH_HISTORY_UPDATED")
+                        end,
+                    },
+                    assistedIconSize = {
+                        type = "range",
+                        name = "Icon Size",
+                        order = 2,
+                        min = 24, max = 80, step = 2,
+                        get = function() return UnDeath.db.profile.assistedIconSize end,
+                        set = function(_, val)
+                            UnDeath.db.profile.assistedIconSize = val
+                            local display = UnDeath:GetModule("Display", true)
+                            if display then display:RefreshAssisted() end
+                        end,
+                    },
+                    assistedKeybindSize = {
+                        type = "range",
+                        name = "Keybind Font Size",
+                        order = 3,
+                        min = 8, max = 24, step = 1,
+                        get = function() return UnDeath.db.profile.assistedKeybindSize end,
+                        set = function(_, val)
+                            UnDeath.db.profile.assistedKeybindSize = val
+                            local display = UnDeath:GetModule("Display", true)
+                            if display then display:RefreshAssisted() end
                         end,
                     },
                 },

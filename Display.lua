@@ -316,7 +316,8 @@ local ICON_BACKDROP = {
 function Display:GetAssistedFrame()
     if self.assistedFrame then return self.assistedFrame end
 
-    local size = UnDeath.db.profile.iconSize
+    local db = UnDeath.db.profile
+    local size = db.assistedIconSize
     local af = UnDeath:CreateMovableFrame("UnDeathAssistedIcon", "assistedPosition", {
         width = size, height = size,
         backdrop = not MSQ and ICON_BACKDROP or nil,
@@ -336,7 +337,7 @@ function Display:GetAssistedFrame()
     af.icon = icon
 
     local keybind = af:CreateFontString(nil, "OVERLAY")
-    keybind:SetFont("Fonts\\FRIZQT__.TTF", math.max(8, math.floor(size * 0.25)), "OUTLINE")
+    keybind:SetFont("Fonts\\FRIZQT__.TTF", db.assistedKeybindSize, "OUTLINE")
     keybind:SetPoint("TOPLEFT", 4, -3)
     keybind:SetTextColor(1, 1, 1)
     af.keybind = keybind
@@ -366,9 +367,9 @@ function Display:RefreshAssisted()
 
     local af = self:GetAssistedFrame()
     local db = UnDeath.db.profile
-    local size = db.iconSize
+    local size = db.assistedIconSize
     af:SetSize(size, size)
-    af.keybind:SetFont("Fonts\\FRIZQT__.TTF", math.max(8, math.floor(size * 0.25)), "OUTLINE")
+    af.keybind:SetFont("Fonts\\FRIZQT__.TTF", db.assistedKeybindSize, "OUTLINE")
     af:Show()
     self:UpdateAssisted()
 end
