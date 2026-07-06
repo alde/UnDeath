@@ -359,17 +359,26 @@ function Display:GetAssistedFrame()
     return af
 end
 
+function Display:UpdateAssistedAppearance()
+    if not self.assistedFrame then return end
+    local db = UnDeath.db.profile
+    local size = db.assistedIconSize
+    self.assistedFrame:SetSize(size, size)
+    self.assistedFrame.keybind:SetFont("Fonts\\FRIZQT__.TTF", db.assistedKeybindSize, "OUTLINE")
+end
+
 function Display:RefreshAssisted()
+    self:UpdateAssistedAppearance()
+
     if not self:ShouldShowAssisted() then
-        if self.assistedFrame then self.assistedFrame:Hide() end
+        local af = self.assistedFrame
+        if af and not (af.unlockOverlay and af.unlockOverlay:IsShown()) then
+            af:Hide()
+        end
         return
     end
 
     local af = self:GetAssistedFrame()
-    local db = UnDeath.db.profile
-    local size = db.assistedIconSize
-    af:SetSize(size, size)
-    af.keybind:SetFont("Fonts\\FRIZQT__.TTF", db.assistedKeybindSize, "OUTLINE")
     af:Show()
     self:UpdateAssisted()
 end
@@ -709,8 +718,12 @@ function Display:UpdatePillarIconAppearance()
     if not self.pillarIcon then return end
     local db = UnDeath.db.profile
     local size = db.pillarIconSize
-    self.pillarIcon:SetSize(size, size)
-    self.pillarIcon:SetAlpha(db.pillarIconAlpha)
+    local f = self.pillarIcon
+    f:SetSize(size, size)
+    local unlocked = f.unlockOverlay and f.unlockOverlay:IsShown()
+    if not unlocked then
+        f:SetAlpha(db.pillarIconAlpha)
+    end
     self:ApplyPillarGlow()
 end
 

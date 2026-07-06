@@ -448,7 +448,7 @@ local function GetOptions()
                         set = function(_, val)
                             UnDeath.db.profile.assistedIconSize = val
                             local display = UnDeath:GetModule("Display", true)
-                            if display then display:RefreshAssisted() end
+                            if display then display:UpdateAssistedAppearance() end
                         end,
                     },
                     assistedKeybindSize = {
@@ -460,7 +460,7 @@ local function GetOptions()
                         set = function(_, val)
                             UnDeath.db.profile.assistedKeybindSize = val
                             local display = UnDeath:GetModule("Display", true)
-                            if display then display:RefreshAssisted() end
+                            if display then display:UpdateAssistedAppearance() end
                         end,
                     },
                 },
