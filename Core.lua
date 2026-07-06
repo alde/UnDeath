@@ -222,6 +222,8 @@ function Core:PLAYER_REGEN_DISABLED()
 end
 
 function Core:PLAYER_REGEN_ENABLED()
+    self.idleState = nil
+
     local combat = UnDeath.state.combat
     if combat and combat.totalCasts > 0 then
         combat.endTime = GetTime()
